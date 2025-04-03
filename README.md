@@ -111,23 +111,5 @@ To simulate high-concurrency traffic:
   ```sh
   k6 run script.js
   ```
-
-## Submission Requirements
-- [ ] Public GitHub repository
-- [ ] Video demonstration covering:
-  - System architecture explanation
-  - Live transaction processing
-  - Queue system handling concurrent requests
-  - React dashboard real-time monitoring
-  - Error handling for failures
-- [ ] Email submission with GitHub & video links
-
-## Known Limitations & Future Improvements
-- Optimize Kafka consumer for better performance.
-- Implement rate limiting to prevent abuse.
-- Add multi-currency support.
-- Improve UI with additional filtering and sorting options.
-
----
 🚀 **Happy Coding!**
 
