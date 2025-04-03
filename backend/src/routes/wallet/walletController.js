@@ -2,9 +2,9 @@ const { sendToKafka } = require("../../config/kafka");
 const { ETransactionType } = require("../../enums/transaction");
 const KAFKA_TOPICS = require("../../enums/kafkaTopics");
 const Wallet = require("../../models/walletSchema");
-const Transaction = require("../../models/transactionSchema")
+const Transaction = require("../../models/transactionSchema");
 
-const transactions = []; 
+const transactions = [];
 
 //Depost API
 const deposit = async (req, res) => {

@@ -19,7 +19,11 @@ const registerUser = async (req, res) => {
     await wallet.save();
     res
       .status(201)
-      .json({ message: "User registered successfully", userId: user._id,wallet });
+      .json({
+        message: "User registered successfully",
+        userId: user._id,
+        wallet,
+      });
   } catch (error) {
     return res.json({
       code: 400,

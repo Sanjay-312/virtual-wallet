@@ -15,8 +15,8 @@ const WalletDashboard = () => {
   useEffect(() => {
     fetchBalance();
     fetchTransactions();
-     // Listen for real-time balance updates
-     socket.on("balanceUpdated", (data) => {
+    // Listen for real-time balance updates
+    socket.on("balanceUpdated", (data) => {
       if (data.userId === userId) {
         console.log("🔄 Balance Updated:", data.balance);
         setBalance(data.balance);
@@ -30,7 +30,9 @@ const WalletDashboard = () => {
 
   const fetchBalance = async () => {
     try {
-      const response = await axios.get(`http://localhost:3000/wallet/balance/${userId}`);
+      const response = await axios.get(
+        `http://localhost:3000/wallet/balance/${userId}`
+      );
       setBalance(response.data.balance);
     } catch (error) {
       setMessage("⚠️ Failed to fetch balance. Please try again.");
@@ -39,7 +41,9 @@ const WalletDashboard = () => {
 
   const fetchTransactions = async () => {
     try {
-      const response = await axios.get(`http://localhost:3000/wallet/history/${userId}`);
+      const response = await axios.get(
+        `http://localhost:3000/wallet/history/${userId}`
+      );
       setTransactions(response.data);
     } catch (error) {
       setMessage("⚠️ Error fetching transactions.");
@@ -52,7 +56,10 @@ const WalletDashboard = () => {
       return;
     }
     try {
-      await axios.post(`http://localhost:3000/wallet/${type}`, { userId, amount: parseFloat(amount) });
+      await axios.post(`http://localhost:3000/wallet/${type}`, {
+        userId,
+        amount: parseFloat(amount),
+      });
       setMessage("Transaction request sent!");
       fetchBalance();
       fetchTransactions();
@@ -74,8 +81,18 @@ const WalletDashboard = () => {
       />
 
       <div className="button-group">
-        <button onClick={() => handleTransaction("deposit")} className="button deposit-btn">Deposit</button>
-        <button onClick={() => handleTransaction("payout")} className="button payout-btn">Payout</button>
+        <button
+          onClick={() => handleTransaction("deposit")}
+          className="button deposit-btn"
+        >
+          Deposit
+        </button>
+        <button
+          onClick={() => handleTransaction("payout")}
+          className="button payout-btn"
+        >
+          Payout
+        </button>
       </div>
 
       <p className="message">{message}</p>
@@ -93,8 +110,3 @@ const WalletDashboard = () => {
 };
 
 export default WalletDashboard;
-
-
-
-
-
