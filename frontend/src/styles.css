@@ -1,0 +1,89 @@
+/* General Styles */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+  }
+  
+  /* Wallet Dashboard Container */
+  .dashboard-container {
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+    width: 400px;
+    text-align: center;
+  }
+  
+  /* Title */
+  .dashboard-container h2 {
+    margin-bottom: 15px;
+    font-size: 24px;
+  }
+  
+  /* Balance */
+  .balance {
+    font-size: 22px;
+    font-weight: bold;
+    margin-bottom: 10px;
+    color: #1fc242;
+  }
+  
+  /* Input Field */
+  .input-field {
+    width: 95%;
+    padding: 10px;
+    margin-top: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 16px;
+    background-color: #0d1503;
+  }
+  
+  /* Buttons */
+  .button-group {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 15px;
+  }
+  
+  .button {
+    padding: 10px 15px;
+    font-size: 16px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    color: white;
+  }
+  
+  .deposit-btn {
+    background-color: green;
+  }
+  
+  .payout-btn {
+    background-color: rgb(213, 16, 16);
+  }
+  
+  /* Transaction History */
+  .transaction-history {
+    margin-top: 20px;
+    text-align: left;
+    color: green;
+  }
+  
+  .transaction-item {
+    background: #1f68c2;
+    padding: 8px;
+    border-radius: 5px;
+    margin-top: 5px;
+    font-size: 14px;
+    color: #ffffff;
+  }
+  .dash-board-heading{
+    color:#ec6110;
+  }
