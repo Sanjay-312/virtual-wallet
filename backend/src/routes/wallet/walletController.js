@@ -4,7 +4,6 @@ const KAFKA_TOPICS = require("../../enums/kafkaTopics");
 const Wallet = require("../../models/walletSchema");
 const Transaction = require("../../models/transactionSchema");
 
-const transactions = [];
 
 //Depost API
 const deposit = async (req, res) => {
@@ -13,13 +12,13 @@ const deposit = async (req, res) => {
     if (!userId || !amount || amount <= 0)
       return res.status(400).json({ error: "Invalid input" });
     let wallet = await Wallet.findOne({ userId });
-    if (!wallet) throw new Error("Wallet not found");
+    if (!wallet) wallet = await Wallet.create({ userId });
     await sendToKafka(KAFKA_TOPICS.TRANSACTIONS_TOPIC, {
       userId,
       amount,
       type: ETransactionType.deposit,
     });
-    res.json({ message: "Deposit request received" });
+    res.json({ message: "Deposit request received",wallet });
   } catch (error) {
     return res.json({
       code: 400,
@@ -44,7 +43,9 @@ const payout = async (req, res) => {
       amount,
       type: ETransactionType.payout,
     });
-    res.json({ message: "Payout request received" });
+     wallet = await Wallet.findOne({ userId });
+
+    res.json({ message: "Payout request received",wallet });
   } catch (error) {
     return res.json({
       code: 400,
