@@ -10,7 +10,7 @@ const WalletDashboard = () => {
   const [transactions, setTransactions] = useState([]);
   const [amount, setAmount] = useState("");
   const [message, setMessage] = useState("");
-  const userId = "67ed84078ea13dfaf6b0c209";
+  const userId = "67f01cf1958e2a35f1e9d42c";
 
   useEffect(() => {
     fetchBalance();

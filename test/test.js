@@ -1,44 +1,48 @@
 const axios = require("axios");
-const EventEmitter = require('events');
-EventEmitter.defaultMaxListeners = 60; // Adjust as needed (e.g., 50 for 1000 requests)
 
 const BASE_URL = "http://localhost:3000/wallet";
+const GLOBAL_WALLET_ID = '67f01cf1958e2a35f1e9d42c'
 
-function generateUserId(index) {
-  return `user_${index}`;
+// Function to shuffle an array (Fisher-Yates algorithm)
+function shuffleArray(array) {
+  for (let i = array.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [array[i], array[j]] = [array[j], array[i]];
+  }
+  return array;
 }
 
-async function simulateDeposits() {
-  const promises = Array(500).fill().map(async (_, i) =>
-        await axios.post(`${BASE_URL}/deposit`, {userId: generateUserId(i),amount: 100})
-    );
-  const response = await Promise.all(promises);
-  for (let res of response) {
-    // console.log(res.data);
-  }
-  console.log("500 deposits queued for 500 unique users");
-}
+async function simulateRandomTransactions() {
+  // Create 500 deposit requests
+  const deposits = Array(500).fill().map(() => ({
+    type: "deposit",
+    request: () =>  axios.post(`${BASE_URL}/deposit`, { userId: GLOBAL_WALLET_ID, amount: Math.ceil(Math.random() * 100) }),
+  }));
 
-async function simulatePayouts() {
-  const promises = Array(500).fill().map(async (_, i) =>
-        await axios.post(`${BASE_URL}/payout`, {userId: generateUserId(i),amount: 100})
-    );
-  const response = await Promise.all(promises);
-  for (let res of response) {
-    // console.log(res.data);
-  }
-  console.log("500 payouts queued for 500 unique users");
+  // Create 300 payout requests
+  const payouts = Array(300).fill().map(() => ({
+    type: "payout",
+    request: () => axios.post(`${BASE_URL}/payout`, { userId: GLOBAL_WALLET_ID, amount: Math.ceil(Math.random() * 1000) }),
+  }));
+
+  // Combine and shuffle all requests
+  const allRequests = shuffleArray([...deposits, ...payouts]);
+
+  // Execute all requests simultaneously
+  const promises = allRequests.map((req) => req.request());
+  await Promise.all(promises);
+
+  console.log(`Queued ${deposits.length} deposits and ${payouts.length} payouts in random order`);
 }
 
 async function runTests() {
-  console.log("Starting deposit simulation...");
-  await simulateDeposits();
-  console.log("Starting payout simulation...");
-  await simulatePayouts();
+  console.log("Starting random transaction simulation...");
+  await simulateRandomTransactions();
+
 }
 
 runTests().catch((err) => {
-  console.error("Test failed:", err);
+  console.error("Test failed:", err.message);
   if (err.response) {
     console.error("Response data:", err.response.data);
     console.error("Status:", err.response.status);

@@ -6,7 +6,7 @@ const dotenv = require("dotenv");
 dotenv.config();
 const { initSockets } = require("./sockets/io");
 const walletRoutes = require("./routes/wallet/walletRoutes");
-const { consumeKafkaMessages } = require("./config/kafka");
+const { consumeKafkaMessages,initKafka } = require("./config/kafka");
 const userRoutes = require("./routes/users/userRoutes");
 const connectDB = require("./config/db");
 
@@ -32,10 +32,9 @@ const PORT = process.env.PORT || 3000;
 server.listen(PORT, async () => {
   console.log(`Server running at http://localhost:${PORT}`);
   try {
-    await connectDB(); 
-    console.log("Database connected successfully");
-    await consumeKafkaMessages();
-    console.log("Kafka consumer started");
+    await connectDB(); // Initialize DB
+    await initKafka(); // Initialize Kafka producer
+    await consumeKafkaMessages(); // Consume kafka messages
   } catch (error) {
     console.error("Startup failed:", error);
     process.exit(1); 
