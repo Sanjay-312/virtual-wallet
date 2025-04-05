@@ -87,7 +87,7 @@ async function consumeKafkaMessages() {
             error: err.message,
           },
         ]);
-        console.error("Transaction Failed: ", err.message);
+        console.error("❌Transaction Failed: ", err.message);
       }
     },
   });
